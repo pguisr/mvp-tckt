@@ -1,7 +1,16 @@
-import { Search, Settings, Bell, ChevronDown, ArrowUpRight, ArrowDownRight, Calendar, Users, DollarSign, Percent } from "lucide-react";
+import { Search, Settings, Bell, ChevronDown, ArrowUpRight, ArrowDownRight, Calendar, Users, DollarSign, Percent, Filter, Share2, Edit, Trash2 } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 // Dados simulados
 const eventosAtivos = [
@@ -14,6 +23,7 @@ const eventosAtivos = [
     valorArrecadado: 45000,
     dataInicio: "2024-01-20",
     dataFim: "2024-01-22",
+    tendencia: "up",
   },
   {
     id: 2,
@@ -24,6 +34,7 @@ const eventosAtivos = [
     valorArrecadado: 2500,
     dataInicio: "2024-02-15",
     dataFim: "2024-02-15",
+    tendencia: "down",
   },
 ];
 
@@ -40,9 +51,13 @@ const Index = () => {
               <input
                 type="text"
                 placeholder="Buscar eventos..."
-                className="pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-sidebar-accent"
+                className="pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-sidebar-accent w-[300px]"
               />
             </div>
+            <Button variant="outline" className="flex items-center gap-2">
+              <Filter size={16} />
+              Filtros
+            </Button>
           </div>
           <div className="flex items-center gap-4">
             <button className="p-2 rounded-lg hover:bg-gray-100">
@@ -52,12 +67,17 @@ const Index = () => {
               <Bell size={20} className="text-gray-600" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
             </button>
-            <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
+            <div className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 cursor-pointer">
+              <div className="w-8 h-8 bg-sidebar-accent rounded-full flex items-center justify-center text-black font-medium">
+                JP
+              </div>
+              <ChevronDown size={16} className="text-gray-600" />
+            </div>
           </div>
         </div>
 
         {/* Cards de Métricas */}
-        <div className="grid grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total de Eventos</CardTitle>
@@ -74,7 +94,7 @@ const Index = () => {
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">1,234</div>
+              <div className="text-2xl font-bold">1.234</div>
               <p className="text-xs text-muted-foreground">+10% desde ontem</p>
             </CardContent>
           </Card>
@@ -100,42 +120,78 @@ const Index = () => {
           </Card>
         </div>
 
-        {/* Lista de Eventos Ativos */}
-        <div className="bg-white rounded-xl p-6 shadow-sm mb-8">
-          <h2 className="text-xl font-semibold mb-4">Eventos Ativos</h2>
-          <div className="space-y-4">
-            {eventosAtivos.map((evento) => (
-              <div key={evento.id} className="border border-gray-200 rounded-lg p-4">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="font-medium text-lg">{evento.nome}</h3>
-                    <p className="text-sm text-gray-500">
-                      {new Date(evento.dataInicio).toLocaleDateString('pt-BR')} - {new Date(evento.dataFim).toLocaleDateString('pt-BR')}
-                    </p>
-                  </div>
-                  <span className={`px-3 py-1 rounded-full text-sm ${
-                    evento.status === 'Ativo' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {evento.status}
-                  </span>
-                </div>
-                <div className="space-y-2">
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>Progresso das Vendas</span>
-                      <span>{Math.round((evento.ingressosVendidos / evento.totalIngressos) * 100)}%</span>
-                    </div>
-                    <Progress value={(evento.ingressosVendidos / evento.totalIngressos) * 100} className="h-2" />
-                  </div>
-                  <div className="flex justify-between text-sm text-gray-600">
-                    <span>{evento.ingressosVendidos} ingressos vendidos</span>
-                    <span>R$ {evento.valorArrecadado.toLocaleString('pt-BR')}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Lista de Eventos */}
+        <Card className="mb-8">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle>Eventos Ativos</CardTitle>
+            <Button>Novo Evento</Button>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Nome do Evento</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Progresso</TableHead>
+                  <TableHead>Valor Arrecadado</TableHead>
+                  <TableHead>Data</TableHead>
+                  <TableHead>Ações</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {eventosAtivos.map((evento) => (
+                  <TableRow key={evento.id}>
+                    <TableCell className="font-medium">{evento.nome}</TableCell>
+                    <TableCell>
+                      <span className={`px-3 py-1 rounded-full text-sm ${
+                        evento.status === 'Ativo' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                      }`}>
+                        {evento.status}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span>{evento.ingressosVendidos} vendidos</span>
+                          <span>{Math.round((evento.ingressosVendidos / evento.totalIngressos) * 100)}%</span>
+                        </div>
+                        <Progress value={(evento.ingressosVendidos / evento.totalIngressos) * 100} className="h-2" />
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <span>R$ {evento.valorArrecadado.toLocaleString('pt-BR')}</span>
+                        {evento.tendencia === 'up' ? (
+                          <ArrowUpRight className="text-green-500" size={16} />
+                        ) : (
+                          <ArrowDownRight className="text-red-500" size={16} />
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-sm text-gray-500">
+                        {new Date(evento.dataInicio).toLocaleDateString('pt-BR')} - {new Date(evento.dataFim).toLocaleDateString('pt-BR')}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="icon">
+                          <Share2 size={16} />
+                        </Button>
+                        <Button variant="ghost" size="icon">
+                          <Edit size={16} />
+                        </Button>
+                        <Button variant="ghost" size="icon">
+                          <Trash2 size={16} />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
