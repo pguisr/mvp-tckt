@@ -1,17 +1,30 @@
-import { Search, Settings, Bell, ChevronDown, Copy, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { Search, Settings, Bell, ChevronDown, ArrowUpRight, ArrowDownRight, Calendar, Users, DollarSign, Percent } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
+import { Progress } from "@/components/ui/progress";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const networks = [
-  { id: "ERC20", name: "Ethereum", chain: "Ethereum" },
-  { id: "ARETH", name: "Arbitrum", chain: "Arbitrum" },
-  { id: "ZKSYNC", name: "zkSync Era", chain: "zkSync" },
-  { id: "OPTIMISM", name: "Optimism", chain: "Optimism" },
-];
-
-const tokens = [
-  { symbol: "ETH", name: "Ethereum", balance: "0.6354", value: "$2,580.20", change: "+1.06%" },
-  { symbol: "FLOW", name: "Flow", balance: "580.03", value: "$6,187.06", change: "-7.65%" },
-  { symbol: "XRP", name: "Ripple", balance: "370.4154", value: "$258.55", change: "+1.42%" },
+// Dados simulados
+const eventosAtivos = [
+  {
+    id: 1,
+    nome: "Festival de Verão 2024",
+    status: "Ativo",
+    ingressosVendidos: 450,
+    totalIngressos: 1000,
+    valorArrecadado: 45000,
+    dataInicio: "2024-01-20",
+    dataFim: "2024-01-22",
+  },
+  {
+    id: 2,
+    nome: "Workshop de Fotografia",
+    status: "Pendente",
+    ingressosVendidos: 25,
+    totalIngressos: 50,
+    valorArrecadado: 2500,
+    dataInicio: "2024-02-15",
+    dataFim: "2024-02-15",
+  },
 ];
 
 const Index = () => {
@@ -19,13 +32,14 @@ const Index = () => {
     <div className="min-h-screen bg-gray-50">
       <Sidebar />
       <div className="ml-64 p-8">
+        {/* Cabeçalho */}
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
               <input
                 type="text"
-                placeholder="Search"
+                placeholder="Buscar eventos..."
                 className="pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-sidebar-accent"
               />
             </div>
@@ -42,105 +56,84 @@ const Index = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-8 mb-8">
-          <div className="col-span-2 bg-white rounded-xl p-6 shadow-sm">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                <img src="/placeholder.svg" alt="ETH" className="w-6 h-6" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-semibold">2.06354 ETH</h2>
-                <p className="text-gray-500">Ethereum +0.02%</p>
-              </div>
-            </div>
+        {/* Cards de Métricas */}
+        <div className="grid grid-cols-4 gap-6 mb-8">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total de Eventos</CardTitle>
+              <Calendar className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">12</div>
+              <p className="text-xs text-muted-foreground">+2 este mês</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Participantes</CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">1,234</div>
+              <p className="text-xs text-muted-foreground">+10% desde ontem</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Receita Total</CardTitle>
+              <DollarSign className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">R$ 47.500</div>
+              <p className="text-xs text-muted-foreground">+20% este mês</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Taxa de Conversão</CardTitle>
+              <Percent className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">15%</div>
+              <p className="text-xs text-muted-foreground">+2% desde ontem</p>
+            </CardContent>
+          </Card>
+        </div>
 
-            <div className="flex gap-4 mb-8">
-              <button className="px-6 py-2 bg-sidebar-accent text-sidebar font-medium rounded-lg flex items-center gap-2">
-                <ArrowUpRight size={20} />
-                Send
-              </button>
-              <button className="px-6 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg flex items-center gap-2">
-                <ArrowDownRight size={20} />
-                Receive
-              </button>
-            </div>
-
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Choose network</label>
-                <div className="grid grid-cols-4 gap-4">
-                  {networks.map((network) => (
-                    <button
-                      key={network.id}
-                      className="p-4 rounded-xl border border-gray-200 hover:border-sidebar-accent focus:border-sidebar-accent focus:outline-none transition-colors"
-                    >
-                      <p className="font-medium">{network.id}</p>
-                      <p className="text-sm text-gray-500">{network.chain}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Amount</label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    className="w-full p-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-sidebar-accent"
-                    placeholder="0.00"
-                  />
-                  <button className="absolute right-4 top-1/2 transform -translate-y-1/2 px-3 py-1 bg-gray-100 rounded-lg text-sm font-medium">
-                    MAX
-                  </button>
-                </div>
-                <p className="mt-2 text-sm text-gray-500">≈ $239.39</p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    className="w-full p-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-sidebar-accent"
-                    placeholder="Recipient address"
-                  />
-                  <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex gap-2">
-                    <button className="p-2 hover:bg-gray-100 rounded-lg">
-                      <Copy size={20} className="text-gray-400" />
-                    </button>
+        {/* Lista de Eventos Ativos */}
+        <div className="bg-white rounded-xl p-6 shadow-sm mb-8">
+          <h2 className="text-xl font-semibold mb-4">Eventos Ativos</h2>
+          <div className="space-y-4">
+            {eventosAtivos.map((evento) => (
+              <div key={evento.id} className="border border-gray-200 rounded-lg p-4">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="font-medium text-lg">{evento.nome}</h3>
+                    <p className="text-sm text-gray-500">
+                      {new Date(evento.dataInicio).toLocaleDateString('pt-BR')} - {new Date(evento.dataFim).toLocaleDateString('pt-BR')}
+                    </p>
                   </div>
+                  <span className={`px-3 py-1 rounded-full text-sm ${
+                    evento.status === 'Ativo' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    {evento.status}
+                  </span>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl p-6 shadow-sm">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold">Total Balance</h2>
-              <p className="text-2xl font-bold">$19,280.01</p>
-            </div>
-
-            <div className="space-y-6">
-              {tokens.map((token) => (
-                <div key={token.symbol} className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                    <span className="font-medium">{token.symbol}</span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex justify-between">
-                      <p className="font-medium">{token.name}</p>
-                      <p className="font-medium">{token.balance}</p>
+                <div className="space-y-2">
+                  <div>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span>Progresso das Vendas</span>
+                      <span>{Math.round((evento.ingressosVendidos / evento.totalIngressos) * 100)}%</span>
                     </div>
-                    <div className="flex justify-between text-sm">
-                      <p className="text-gray-500">{token.value}</p>
-                      <p className={token.change.startsWith("+") ? "text-crypto-green" : "text-crypto-red"}>
-                        {token.change}
-                      </p>
-                    </div>
+                    <Progress value={(evento.ingressosVendidos / evento.totalIngressos) * 100} className="h-2" />
+                  </div>
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>{evento.ingressosVendidos} ingressos vendidos</span>
+                    <span>R$ {evento.valorArrecadado.toLocaleString('pt-BR')}</span>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

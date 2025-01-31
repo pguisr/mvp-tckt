@@ -1,18 +1,20 @@
-import { Home, Wallet, ArrowLeftRight, Bell, ShoppingBag, Newspaper, Settings, LogOut } from "lucide-react";
+import { Home, Calendar, TrendingUp, Tag, Wallet, Bell, Settings, HelpCircle, MessageSquare, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const menuItems = [
-  { icon: Home, label: "Dashboard", path: "/" },
-  { icon: Wallet, label: "Wallet", path: "/wallet" },
-  { icon: ArrowLeftRight, label: "Trade", path: "/trade" },
-  { icon: Bell, label: "Notifications", path: "/notifications", badge: 4 },
-  { icon: ShoppingBag, label: "Marketplace", path: "/marketplace" },
+  { icon: Home, label: "Visão Geral", path: "/" },
+  { icon: Calendar, label: "Eventos", path: "/eventos" },
+  { icon: TrendingUp, label: "Análises", path: "/analises" },
+  { icon: Tag, label: "Promoções", path: "/promocoes" },
+  { icon: Wallet, label: "Pagamentos", path: "/pagamentos" },
+  { icon: Bell, label: "Notificações", path: "/notificacoes", badge: 4 },
 ];
 
 const bottomMenuItems = [
-  { icon: Newspaper, label: "News", path: "/news", badge: 3 },
-  { icon: Settings, label: "Settings", path: "/settings" },
-  { icon: LogOut, label: "Log Out", path: "/logout" },
+  { icon: Settings, label: "Configurações", path: "/configuracoes" },
+  { icon: HelpCircle, label: "Ajuda", path: "/ajuda" },
+  { icon: MessageSquare, label: "Suporte", path: "/suporte", badge: 1 },
+  { icon: LogOut, label: "Sair", path: "/logout" },
 ];
 
 export const Sidebar = () => {
@@ -21,9 +23,9 @@ export const Sidebar = () => {
       <div className="p-6">
         <div className="flex items-center gap-2 mb-8">
           <div className="w-8 h-8 bg-sidebar-accent rounded-lg flex items-center justify-center">
-            <span className="text-sidebar font-bold">X</span>
+            <span className="text-sidebar font-bold">E</span>
           </div>
-          <span className="text-xl font-bold">X Wallet</span>
+          <span className="text-xl font-bold">EventPro</span>
         </div>
 
         <nav className="space-y-2">
@@ -48,11 +50,11 @@ export const Sidebar = () => {
           <div className="space-y-4">
             <div className="w-12 h-12 bg-sidebar-accent rounded-full mx-auto" />
             <div className="text-center">
-              <h3 className="font-medium">The new update</h3>
-              <p className="text-sm text-white/60">Version 3.2.0</p>
+              <h3 className="font-medium">Precisa de ajuda?</h3>
+              <p className="text-sm text-white/60">Nossa equipe está aqui para você</p>
             </div>
-            <button className="w-full bg-sidebar text-white py-2 rounded-lg hover:bg-sidebar/80 transition-colors">
-              Let's Go →
+            <button className="w-full bg-sidebar-accent text-sidebar py-2 rounded-lg hover:bg-sidebar-accent/80 transition-colors">
+              Falar com Suporte
             </button>
           </div>
         </div>
