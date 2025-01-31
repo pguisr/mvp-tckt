@@ -1,4 +1,4 @@
-import { Search, Settings, Bell, ChevronDown, ArrowUpRight, ArrowDownRight, Calendar, Users, DollarSign, Percent, Filter, Share2, Edit, Trash2, BarChart3, Ticket, MessageSquare } from "lucide-react";
+import { Search, Settings, Bell, ChevronDown, ArrowUpRight, ArrowDownRight, Calendar, Users, DollarSign, Percent, Filter, Share2, Edit, Trash2, BarChart3, Ticket, MessageSquare, Plus } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
