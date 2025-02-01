@@ -1,19 +1,17 @@
-import { Home, Calendar, TrendingUp, Tag, Wallet, Bell, Settings, HelpCircle, MessageSquare, LogOut } from "lucide-react";
+import { LayoutGrid, Ticket, Users, DollarSign, MessageSquare, Settings, HelpCircle, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const menuItems = [
-  { icon: Home, label: "Visão Geral", path: "/" },
-  { icon: Calendar, label: "Eventos", path: "/eventos" },
-  { icon: TrendingUp, label: "Análises", path: "/analises" },
-  { icon: Tag, label: "Promoções", path: "/promocoes" },
-  { icon: Wallet, label: "Pagamentos", path: "/pagamentos" },
-  { icon: Bell, label: "Notificações", path: "/notificacoes", badge: 4 },
+  { icon: LayoutGrid, label: "Visão Geral", path: "/" },
+  { icon: Ticket, label: "Ingressos", path: "/ingressos" },
+  { icon: Users, label: "Participantes", path: "/participantes" },
+  { icon: DollarSign, label: "Financeiro", path: "/financeiro" },
+  { icon: MessageSquare, label: "Feedback", path: "/feedback" },
 ];
 
 const bottomMenuItems = [
   { icon: Settings, label: "Configurações", path: "/configuracoes" },
   { icon: HelpCircle, label: "Ajuda", path: "/ajuda" },
-  { icon: MessageSquare, label: "Suporte", path: "/suporte", badge: 1 },
   { icon: LogOut, label: "Sair", path: "/logout" },
 ];
 
@@ -37,11 +35,6 @@ export const Sidebar = () => {
             >
               <item.icon size={20} />
               <span>{item.label}</span>
-              {item.badge && (
-                <span className="ml-auto bg-sidebar-accent text-sidebar w-6 h-6 rounded-full flex items-center justify-center text-sm">
-                  {item.badge}
-                </span>
-              )}
             </Link>
           ))}
         </nav>
@@ -70,11 +63,6 @@ export const Sidebar = () => {
             >
               <item.icon size={20} />
               <span>{item.label}</span>
-              {item.badge && (
-                <span className="ml-auto bg-sidebar-accent text-sidebar w-6 h-6 rounded-full flex items-center justify-center text-sm">
-                  {item.badge}
-                </span>
-              )}
             </Link>
           ))}
         </nav>
