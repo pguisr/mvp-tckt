@@ -1,4 +1,5 @@
 import { Search, Settings, Bell, ChevronDown, ArrowUpRight, ArrowDownRight, Calendar, Users, DollarSign, Percent, Filter, Share2, Edit, Trash2, Plus } from "lucide-react";
+import { Sidebar } from "@/components/Sidebar";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -40,7 +41,8 @@ const eventosAtivos = [
 const Index = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="p-8">
+      <Sidebar />
+      <div className="ml-64 p-8">
         {/* Cabeçalho */}
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-4">
