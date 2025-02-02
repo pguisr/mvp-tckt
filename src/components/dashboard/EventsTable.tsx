@@ -4,10 +4,12 @@ import { Share2, Edit, Trash2, ArrowUpRight, ArrowDownRight } from "lucide-react
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 
+type EventStatus = 'Ativo' | 'Rascunho' | 'Encerrado';
+
 interface Event {
   id: number;
   nome: string;
-  status: string;
+  status: EventStatus;
   ingressosVendidos: number;
   totalIngressos: number;
   valorArrecadado: number;
@@ -16,6 +18,19 @@ interface Event {
   tendencia: "up" | "down";
   checkoutUrl: string;
 }
+
+const getStatusColor = (status: EventStatus) => {
+  switch (status) {
+    case 'Ativo':
+      return 'bg-green-100 text-green-800';
+    case 'Rascunho':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'Encerrado':
+      return 'bg-gray-100 text-gray-800';
+    default:
+      return 'bg-gray-100 text-gray-800';
+  }
+};
 
 export const EventsTable = ({ events }: { events: Event[] }) => {
   const copyCheckoutLink = (url: string) => {
@@ -32,7 +47,6 @@ export const EventsTable = ({ events }: { events: Event[] }) => {
           <TableHead>Progresso</TableHead>
           <TableHead>Valor Arrecadado</TableHead>
           <TableHead>Data</TableHead>
-          <TableHead>Link de Checkout</TableHead>
           <TableHead>Ações</TableHead>
         </TableRow>
       </TableHeader>
@@ -41,9 +55,7 @@ export const EventsTable = ({ events }: { events: Event[] }) => {
           <TableRow key={evento.id}>
             <TableCell className="font-medium">{evento.nome}</TableCell>
             <TableCell>
-              <span className={`px-3 py-1 rounded-xl text-sm ${
-                evento.status === 'Ativo' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-              }`}>
+              <span className={`px-3 py-1 rounded-xl text-sm ${getStatusColor(evento.status)}`}>
                 {evento.status}
               </span>
             </TableCell>
@@ -72,18 +84,10 @@ export const EventsTable = ({ events }: { events: Event[] }) => {
               </div>
             </TableCell>
             <TableCell>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => copyCheckoutLink(evento.checkoutUrl)}
-                className="flex items-center gap-2 rounded-xl"
-              >
-                <Share2 size={14} />
-                Copiar Link
-              </Button>
-            </TableCell>
-            <TableCell>
               <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon" className="rounded-xl" onClick={() => copyCheckoutLink(evento.checkoutUrl)}>
+                  <Share2 size={16} />
+                </Button>
                 <Button variant="ghost" size="icon" className="rounded-xl">
                   <Edit size={16} />
                 </Button>

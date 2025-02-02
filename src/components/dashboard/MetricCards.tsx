@@ -6,18 +6,13 @@ interface MetricCardsProps {
   totalParticipants: number;
   totalRevenue: number;
   conversionRate: number;
-  nextPayment?: {
-    amount: number;
-    date: string;
-  };
 }
 
 export const MetricCards = ({ 
   totalEvents, 
   totalParticipants, 
   totalRevenue, 
-  conversionRate,
-  nextPayment 
+  conversionRate
 }: MetricCardsProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -50,11 +45,6 @@ export const MetricCards = ({
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">R$ {totalRevenue.toLocaleString('pt-BR')}</div>
-          {nextPayment && (
-            <p className="text-xs text-muted-foreground">
-              Próximo pagamento: R$ {nextPayment.amount.toLocaleString('pt-BR')} em {nextPayment.date}
-            </p>
-          )}
         </CardContent>
       </Card>
       

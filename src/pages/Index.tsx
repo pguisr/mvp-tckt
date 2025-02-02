@@ -1,4 +1,4 @@
-import { Search, Settings, Bell, ChevronDown, Plus, Filter } from "lucide-react";
+import { Search, Settings, Bell, ChevronDown, Plus, Filter, HelpCircle } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -66,6 +66,10 @@ const Index = () => {
             </Button>
           </div>
           <div className="flex items-center gap-4">
+            <Button variant="outline" className="flex items-center gap-2 rounded-xl">
+              <HelpCircle size={16} />
+              Precisa de ajuda?
+            </Button>
             <button className="p-2 rounded-xl hover:bg-gray-100">
               <Settings size={20} className="text-gray-600" />
             </button>
@@ -88,7 +92,7 @@ const Index = () => {
         {/* Lista de Eventos */}
         <Card className="rounded-xl overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Eventos Ativos</CardTitle>
+            <CardTitle>Meus Eventos</CardTitle>
             <Button className="rounded-xl">
               <Plus className="mr-2 h-4 w-4" />
               Novo Evento
