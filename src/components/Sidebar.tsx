@@ -20,7 +20,7 @@ export const Sidebar = () => {
     <div className="w-64 h-screen bg-sidebar flex flex-col fixed left-0 text-white">
       <div className="p-6">
         <div className="flex items-center gap-2 mb-8">
-          <div className="w-8 h-8 bg-sidebar-accent rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-sidebar-accent rounded-xl flex items-center justify-center">
             <span className="text-sidebar font-bold">E</span>
           </div>
           <span className="text-xl font-bold">EventPro</span>
@@ -31,7 +31,7 @@ export const Sidebar = () => {
             <Link
               key={item.label}
               to={item.path}
-              className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors"
+              className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/10 transition-colors"
             >
               <item.icon size={20} />
               <span>{item.label}</span>
@@ -41,12 +41,12 @@ export const Sidebar = () => {
 
         <div className="mt-8 p-6 bg-sidebar-accent/10 rounded-xl">
           <div className="space-y-4">
-            <div className="w-12 h-12 bg-sidebar-accent rounded-full mx-auto" />
+            <div className="w-12 h-12 bg-sidebar-accent rounded-xl mx-auto" />
             <div className="text-center">
               <h3 className="font-medium">Precisa de ajuda?</h3>
               <p className="text-sm text-white/60">Nossa equipe está aqui para você</p>
             </div>
-            <button className="w-full bg-sidebar-accent text-sidebar py-2 rounded-lg hover:bg-sidebar-accent/80 transition-colors">
+            <button className="w-full bg-sidebar-accent text-sidebar py-2 rounded-xl hover:bg-sidebar-accent/80 transition-colors">
               Falar com Suporte
             </button>
           </div>
@@ -59,7 +59,7 @@ export const Sidebar = () => {
             <Link
               key={item.label}
               to={item.path}
-              className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors"
+              className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/10 transition-colors"
             >
               <item.icon size={20} />
               <span>{item.label}</span>

@@ -41,7 +41,7 @@ export const EventsTable = ({ events }: { events: Event[] }) => {
           <TableRow key={evento.id}>
             <TableCell className="font-medium">{evento.nome}</TableCell>
             <TableCell>
-              <span className={`px-3 py-1 rounded-full text-sm ${
+              <span className={`px-3 py-1 rounded-xl text-sm ${
                 evento.status === 'Ativo' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
               }`}>
                 {evento.status}
@@ -53,7 +53,7 @@ export const EventsTable = ({ events }: { events: Event[] }) => {
                   <span>{evento.ingressosVendidos} vendidos</span>
                   <span>{Math.round((evento.ingressosVendidos / evento.totalIngressos) * 100)}%</span>
                 </div>
-                <Progress value={(evento.ingressosVendidos / evento.totalIngressos) * 100} className="h-2" />
+                <Progress value={(evento.ingressosVendidos / evento.totalIngressos) * 100} className="h-2 rounded-xl" />
               </div>
             </TableCell>
             <TableCell>
@@ -76,7 +76,7 @@ export const EventsTable = ({ events }: { events: Event[] }) => {
                 variant="outline"
                 size="sm"
                 onClick={() => copyCheckoutLink(evento.checkoutUrl)}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 rounded-xl"
               >
                 <Share2 size={14} />
                 Copiar Link
@@ -84,10 +84,10 @@ export const EventsTable = ({ events }: { events: Event[] }) => {
             </TableCell>
             <TableCell>
               <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" className="rounded-xl">
                   <Edit size={16} />
                 </Button>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" className="rounded-xl">
                   <Trash2 size={16} />
                 </Button>
               </div>

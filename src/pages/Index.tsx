@@ -16,7 +16,7 @@ const eventosAtivos = [
     valorArrecadado: 45000,
     dataInicio: "2024-01-20",
     dataFim: "2024-01-22",
-    tendencia: "up",
+    tendencia: "up" as const,
     checkoutUrl: "https://checkout.exemplo.com/festival-verao-2024"
   },
   {
@@ -28,7 +28,7 @@ const eventosAtivos = [
     valorArrecadado: 2500,
     dataInicio: "2024-02-15",
     dataFim: "2024-02-15",
-    tendencia: "down",
+    tendencia: "down" as const,
     checkoutUrl: "https://checkout.exemplo.com/workshop-foto"
   },
 ];
@@ -57,24 +57,24 @@ const Index = () => {
               <input
                 type="text"
                 placeholder="Buscar eventos..."
-                className="pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-sidebar-accent w-[300px]"
+                className="pl-10 pr-4 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-sidebar-accent w-[300px]"
               />
             </div>
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" className="flex items-center gap-2 rounded-xl">
               <Filter size={16} />
               Filtros
             </Button>
           </div>
           <div className="flex items-center gap-4">
-            <button className="p-2 rounded-lg hover:bg-gray-100">
+            <button className="p-2 rounded-xl hover:bg-gray-100">
               <Settings size={20} className="text-gray-600" />
             </button>
-            <button className="p-2 rounded-lg hover:bg-gray-100 relative">
+            <button className="p-2 rounded-xl hover:bg-gray-100 relative">
               <Bell size={20} className="text-gray-600" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
             </button>
-            <div className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 cursor-pointer">
-              <div className="w-8 h-8 bg-sidebar-accent rounded-full flex items-center justify-center text-black font-medium">
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-gray-100 cursor-pointer">
+              <div className="w-8 h-8 bg-sidebar-accent rounded-xl flex items-center justify-center text-black font-medium">
                 JP
               </div>
               <ChevronDown size={16} className="text-gray-600" />
@@ -86,10 +86,10 @@ const Index = () => {
         <MetricCards {...metricas} />
 
         {/* Lista de Eventos */}
-        <Card>
+        <Card className="rounded-xl overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Eventos Ativos</CardTitle>
-            <Button>
+            <Button className="rounded-xl">
               <Plus className="mr-2 h-4 w-4" />
               Novo Evento
             </Button>
