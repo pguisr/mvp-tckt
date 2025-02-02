@@ -1,16 +1,9 @@
-import { Search, Settings, Bell, ChevronDown, ArrowUpRight, ArrowDownRight, Calendar, Users, DollarSign, Percent, Filter, Share2, Edit, Trash2, Plus } from "lucide-react";
+import { Search, Settings, Bell, ChevronDown, Plus, Filter } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
-import { Progress } from "@/components/ui/progress";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MetricCards } from "@/components/dashboard/MetricCards";
+import { EventsTable } from "@/components/dashboard/EventsTable";
 
 // Dados simulados
 const eventosAtivos = [
@@ -24,6 +17,7 @@ const eventosAtivos = [
     dataInicio: "2024-01-20",
     dataFim: "2024-01-22",
     tendencia: "up",
+    checkoutUrl: "https://checkout.exemplo.com/festival-verao-2024"
   },
   {
     id: 2,
@@ -35,8 +29,20 @@ const eventosAtivos = [
     dataInicio: "2024-02-15",
     dataFim: "2024-02-15",
     tendencia: "down",
+    checkoutUrl: "https://checkout.exemplo.com/workshop-foto"
   },
 ];
+
+const metricas = {
+  totalEvents: 12,
+  totalParticipants: 1234,
+  totalRevenue: 47500,
+  conversionRate: 15,
+  nextPayment: {
+    amount: 42500,
+    date: "15/02/2024"
+  }
+};
 
 const Index = () => {
   return (
@@ -77,48 +83,7 @@ const Index = () => {
         </div>
 
         {/* Cards de Métricas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total de Eventos</CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">12</div>
-              <p className="text-xs text-muted-foreground">+2 este mês</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Participantes</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">1.234</div>
-              <p className="text-xs text-muted-foreground">+10% desde ontem</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Receita Total</CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">R$ 47.500</div>
-              <p className="text-xs text-muted-foreground">+20% este mês</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Taxa de Conversão</CardTitle>
-              <Percent className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">15%</div>
-              <p className="text-xs text-muted-foreground">+2% desde ontem</p>
-            </CardContent>
-          </Card>
-        </div>
+        <MetricCards {...metricas} />
 
         {/* Lista de Eventos */}
         <Card>
@@ -130,69 +95,7 @@ const Index = () => {
             </Button>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Nome do Evento</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Progresso</TableHead>
-                  <TableHead>Valor Arrecadado</TableHead>
-                  <TableHead>Data</TableHead>
-                  <TableHead>Ações</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {eventosAtivos.map((evento) => (
-                  <TableRow key={evento.id}>
-                    <TableCell className="font-medium">{evento.nome}</TableCell>
-                    <TableCell>
-                      <span className={`px-3 py-1 rounded-full text-sm ${
-                        evento.status === 'Ativo' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                      }`}>
-                        {evento.status}
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span>{evento.ingressosVendidos} vendidos</span>
-                          <span>{Math.round((evento.ingressosVendidos / evento.totalIngressos) * 100)}%</span>
-                        </div>
-                        <Progress value={(evento.ingressosVendidos / evento.totalIngressos) * 100} className="h-2" />
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <span>R$ {evento.valorArrecadado.toLocaleString('pt-BR')}</span>
-                        {evento.tendencia === 'up' ? (
-                          <ArrowUpRight className="text-green-500" size={16} />
-                        ) : (
-                          <ArrowDownRight className="text-red-500" size={16} />
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-sm text-gray-500">
-                        {new Date(evento.dataInicio).toLocaleDateString('pt-BR')} - {new Date(evento.dataFim).toLocaleDateString('pt-BR')}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="icon">
-                          <Share2 size={16} />
-                        </Button>
-                        <Button variant="ghost" size="icon">
-                          <Edit size={16} />
-                        </Button>
-                        <Button variant="ghost" size="icon">
-                          <Trash2 size={16} />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <EventsTable events={eventosAtivos} />
           </CardContent>
         </Card>
       </div>
