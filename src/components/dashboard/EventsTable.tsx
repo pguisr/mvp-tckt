@@ -61,21 +61,38 @@ export const EventsTable = ({ events }: { events: Event[] }) => {
             </TableCell>
             <TableCell>
               <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>{evento.ingressosVendidos} vendidos</span>
-                  <span>{Math.round((evento.ingressosVendidos / evento.totalIngressos) * 100)}%</span>
+                <Progress 
+                  value={(evento.ingressosVendidos / evento.totalIngressos) * 100} 
+                  className="h-2 rounded-xl bg-gray-100"
+                />
+                <div className="flex justify-between text-sm text-gray-500">
+                  <span>{evento.ingressosVendidos} de {evento.totalIngressos} ingressos</span>
+                  <span className="font-medium">
+                    {Math.round((evento.ingressosVendidos / evento.totalIngressos) * 100)}%
+                  </span>
                 </div>
-                <Progress value={(evento.ingressosVendidos / evento.totalIngressos) * 100} className="h-2 rounded-xl" />
               </div>
             </TableCell>
             <TableCell>
-              <div className="flex items-center gap-2">
-                <span>R$ {evento.valorArrecadado.toLocaleString('pt-BR')}</span>
-                {evento.tendencia === 'up' ? (
-                  <ArrowUpRight className="text-green-500" size={16} />
-                ) : (
-                  <ArrowDownRight className="text-red-500" size={16} />
-                )}
+              <div className="flex flex-col gap-1">
+                <div className="text-lg font-semibold">
+                  R$ {evento.valorArrecadado.toLocaleString('pt-BR')}
+                </div>
+                <div className={`flex items-center gap-1 text-sm ${
+                  evento.tendencia === 'up' ? 'text-crypto-green' : 'text-crypto-red'
+                }`}>
+                  {evento.tendencia === 'up' ? (
+                    <>
+                      <ArrowUpRight size={16} />
+                      <span>Em alta</span>
+                    </>
+                  ) : (
+                    <>
+                      <ArrowDownRight size={16} />
+                      <span>Em baixa</span>
+                    </>
+                  )}
+                </div>
               </div>
             </TableCell>
             <TableCell>

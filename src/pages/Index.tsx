@@ -10,7 +10,7 @@ const eventosAtivos = [
   {
     id: 1,
     nome: "Festival de Verão 2024",
-    status: "Ativo",
+    status: "Ativo" as const,
     ingressosVendidos: 450,
     totalIngressos: 1000,
     valorArrecadado: 45000,
@@ -22,7 +22,7 @@ const eventosAtivos = [
   {
     id: 2,
     nome: "Workshop de Fotografia",
-    status: "Pendente",
+    status: "Rascunho" as const,
     ingressosVendidos: 25,
     totalIngressos: 50,
     valorArrecadado: 2500,
