@@ -1,6 +1,6 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Share2, Edit, Trash2, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { Share2, Edit, Trash2, ArrowUpRight } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 
@@ -38,11 +38,19 @@ export const EventsTable = ({ events }: { events: Event[] }) => {
     toast.success("Link de checkout copiado!");
   };
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR', { 
+      day: '2-digit',
+      month: '2-digit'
+    });
+  };
+
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Nome do Evento</TableHead>
+          <TableHead>Nome</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Progresso</TableHead>
           <TableHead>Valor Arrecadado</TableHead>
@@ -78,26 +86,17 @@ export const EventsTable = ({ events }: { events: Event[] }) => {
                 <div className="text-lg font-semibold">
                   R$ {evento.valorArrecadado.toLocaleString('pt-BR')}
                 </div>
-                <div className={`flex items-center gap-1 text-sm ${
-                  evento.tendencia === 'up' ? 'text-crypto-green' : 'text-crypto-red'
-                }`}>
-                  {evento.tendencia === 'up' ? (
-                    <>
-                      <ArrowUpRight size={16} />
-                      <span>Em alta</span>
-                    </>
-                  ) : (
-                    <>
-                      <ArrowDownRight size={16} />
-                      <span>Em baixa</span>
-                    </>
-                  )}
-                </div>
+                {evento.tendencia === 'up' && (
+                  <div className="flex items-center gap-1 text-sm text-crypto-green">
+                    <ArrowUpRight size={16} />
+                    <span>Em alta</span>
+                  </div>
+                )}
               </div>
             </TableCell>
             <TableCell>
               <div className="text-sm text-gray-500">
-                {new Date(evento.dataInicio).toLocaleDateString('pt-BR')} - {new Date(evento.dataFim).toLocaleDateString('pt-BR')}
+                {formatDate(evento.dataInicio)} - {formatDate(evento.dataFim)}
               </div>
             </TableCell>
             <TableCell>
